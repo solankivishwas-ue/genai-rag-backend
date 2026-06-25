@@ -1,0 +1,88 @@
+/* ── App shell ─────────────────────────────────────────────────────────────── */
+.app-shell {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Top nav */
+.app-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 58px;
+  min-height: 58px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.app-nav-brand {
+  display: flex; align-items: center; gap: 10px;
+}
+.nav-logo-icon {
+  width: 34px; height: 34px; border-radius: 10px;
+  background: var(--gradient); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 14px rgba(124,58,237,0.35);
+}
+.nav-logo-text {
+  font-size: 17px; font-weight: 700; color: var(--text); letter-spacing: -0.4px;
+}
+.nav-accent {
+  background: var(--gradient);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.app-nav-right {
+  display: flex; align-items: center; gap: 14px;
+}
+.nav-link {
+  font-size: 13px; color: var(--muted); text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-link:hover { color: var(--text); }
+.nav-user {
+  display: flex; align-items: center; gap: 8px;
+}
+.nav-avatar {
+  width: 30px; height: 30px; border-radius: 8px;
+  background: var(--gradient); color: #fff;
+  font-size: 13px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.nav-email {
+  font-size: 13px; font-weight: 500; color: var(--text);
+  max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.nav-logout {
+  background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+  border-radius: 8px; color: var(--muted); cursor: pointer;
+  width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+  transition: color 0.2s, background 0.2s;
+}
+.nav-logout:hover { color: #f87171; background: rgba(239,68,68,0.1); }
+
+/* Loading screen */
+.app-loading {
+  height: 100vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: var(--bg); gap: 16px;
+}
+.loading-logo {
+  width: 64px; height: 64px; border-radius: 18px;
+  background: var(--gradient); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 12px 40px rgba(124,58,237,0.4);
+  animation: pulse-load 1.5s ease-in-out infinite;
+}
+@keyframes pulse-load {
+  0%,100%{box-shadow:0 12px 40px rgba(124,58,237,0.4)}
+  50%{box-shadow:0 12px 60px rgba(124,58,237,0.7)}
+}
+.app-loading p { font-size: 14px; color: var(--muted); margin: 0; }
