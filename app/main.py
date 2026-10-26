@@ -65,14 +65,17 @@ def create_application() -> FastAPI:
         version=settings.APP_VERSION,
         description=(
             "## GenAI RAG Backend\n\n"
-            "Production-ready **Retrieval-Augmented Generation** API.\n\n"
+            "A Retrieval-Augmented Generation (RAG) API built with FastAPI.\n\n"
             "### Features\n"
-            "- 📄 **Document Ingestion** — JSON body, file upload (PDF/DOCX/TXT), async background\n"
-            "- 🔍 **Vector Search** — pgvector cosine similarity with IVFFlat index\n"
-            "- 🤖 **RAG Pipeline** — OpenAI embeddings + GPT-4o chat, blocking & streaming\n"
-            "- 🔐 **JWT Auth** — Register / login / refresh / protected routes\n"
-            "- 📊 **Monitoring** — Prometheus `/metrics` endpoint\n"
-            "- 🏥 **Health Checks** — `/health`, `/health/live`, `/health/ready`\n"
+            "- **Document ingestion** from a JSON body, a file upload (PDF, DOCX, TXT), "
+            "or an async background job\n"
+            "- **Vector search** over document chunks using pgvector cosine similarity\n"
+            "- **Question answering** using OpenAI or a local Ollama model, "
+            "as a single response or a stream\n"
+            "- **JWT authentication** with register, login and token refresh\n"
+            "- **Redis caching** of embeddings and query results\n"
+            "- **Prometheus metrics** at `/metrics`\n"
+            "- **Health checks** at `/health`, `/health/live` and `/health/ready`\n"
         ),
         docs_url="/docs",
         redoc_url="/redoc",

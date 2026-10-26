@@ -37,10 +37,12 @@ def _get_client() -> AsyncOpenAI:
 
 
 def _embedding_model() -> str:
+    """Name of the embedding model for the active provider."""
     return settings.OLLAMA_EMBEDDING_MODEL if settings.USE_OLLAMA else settings.OPENAI_EMBEDDING_MODEL
 
 
 def _embedding_dims() -> int:
+    """Vector size for the active provider; must match the DB vector column."""
     return settings.embedding_dimensions
 
 
@@ -64,6 +66,7 @@ def _get_encoder(model: str = "text-embedding-3-small") -> tiktoken.Encoding:
 
 
 def count_tokens(text: str, model: str = "text-embedding-3-small") -> int:
+    """Number of tokens in text, as counted by the tiktoken encoder for model."""
     return len(_get_encoder(model).encode(text))
 
 
@@ -119,6 +122,7 @@ class EmbeddingService:
         self.dimensions = _embedding_dims()
 
     async def embed_text(self, text: str, cache: "CacheService | None" = None) -> List[float]:
+        """Embed one text, checking the Redis cache first and storing the result."""
         from app.services.cache import embedding_key
 
         cleaned = text.replace("\n", " ").strip()
@@ -154,6 +158,10 @@ class EmbeddingService:
         texts: List[str],
         cache: "CacheService | None" = None,
     ) -> List[List[float]]:
+        """Embed many texts, calling the provider only for cache misses.
+
+        Results keep the order of the input texts.
+        """
         from app.services.cache import embedding_key
 
         cleaned = [t.replace("\n", " ").strip() for t in texts]
