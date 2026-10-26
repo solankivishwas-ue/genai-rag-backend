@@ -10,7 +10,7 @@ from app.config import settings
 from app.core.logging import get_logger
 from app.schemas.document import QueryRequest, QueryResponse, SourceChunk
 from app.services.cache import CacheService, rag_query_key
-from app.services.embedding import EmbeddingService, _get_client
+from app.services.embedding import EmbeddingService, _get_client, _is_mock_mode
 
 logger = get_logger(__name__)
 
@@ -83,6 +83,13 @@ class RAGService:
                 for i, row in enumerate(context_chunks)
             ]
             context = "\n\n---\n\n".join(context_parts)
+
+        if _is_mock_mode():
+            return (
+                f"Mock mode — no LLM configured. Found {len(context_chunks)} relevant "
+                f"chunk(s).\n\nContext preview:\n{context[:400]}",
+                0,
+            )
 
         system_prompt = (
             "You are a helpful AI assistant. Answer the user's question using ONLY "
