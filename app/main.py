@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from app.api.v1.router import api_router
-from app.config import settings
+from app.config import _DEFAULT_SECRET_KEY, settings
 from app.core.logging import get_logger, setup_logging
 from app.database import dispose_engine, run_migrations
 from app.services.cache import close_redis
@@ -28,6 +28,11 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
         version=settings.APP_VERSION,
         env=settings.APP_ENV,
     )
+    if settings.is_production and settings.SECRET_KEY == _DEFAULT_SECRET_KEY:
+        logger.warning(
+            "SECRET_KEY is still the default value in production — "
+            "set a strong SECRET_KEY, JWTs can be forged otherwise"
+        )
     try:
         run_migrations()
         logger.info("Database migrations applied")
@@ -73,7 +78,7 @@ def create_application() -> FastAPI:
         redoc_url="/redoc",
         openapi_url="/openapi.json",
         lifespan=lifespan,
-        contact={"name": "RAG Backend", "url": "https://github.com/your-org/genai-rag"},
+        contact={"name": "RAG Backend", "url": "https://github.com/solankivishwas-ue/genai-rag-backend"},
         license_info={"name": "MIT"},
     )
 

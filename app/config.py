@@ -7,6 +7,9 @@ from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
+_DEFAULT_SECRET_KEY = "change-me-in-production-must-be-32-chars-min"
+
+
 class Settings(BaseSettings):
     """
     Application settings loaded from environment variables / .env file.
@@ -77,7 +80,7 @@ class Settings(BaseSettings):
     SIMILARITY_THRESHOLD: float = 0.7
 
     # ── Security / JWT ────────────────────────────────────────────────────────
-    SECRET_KEY: str = "change-me-in-production-must-be-32-chars-min"
+    SECRET_KEY: str = _DEFAULT_SECRET_KEY
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
